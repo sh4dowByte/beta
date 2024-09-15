@@ -1,12 +1,7 @@
-import requests
-import warnings
-from urllib3.exceptions import InsecureRequestWarning
+import OpenSSL
 import ssl
 import socket
-from pprint import pprint
-
-# Disable InsecureRequestWarning
-warnings.simplefilter('ignore', InsecureRequestWarning)
+from app.utils.script import Text
 
 metadata = {
     'description': '''
@@ -17,47 +12,124 @@ metadata = {
     'portrule': ['https',],
 }
 
-def get_ssl_cert_info(hostname, port=443):
+def format_certificate_info(cert_info):
+    """
+    Format the certificate information into a human-readable string.
+    
+    Args:
+        cert_info (dict): A dictionary containing certificate details.
+        
+    Returns:
+        str: Formatted certificate information.
+    """
+    # Extracting the subject details
+    subject = cert_info['Subject']
+    issuer = cert_info['Issuer']
+    
+    # Constructing the subject information string
+    subject_info = f"""Certificate Subject:
+    - Country: {subject.get(b'C', b'N/A').decode('utf-8')}
+    - State/Province: {subject.get(b'ST', b'N/A').decode('utf-8')}
+    - Locality: {subject.get(b'L', b'N/A').decode('utf-8')}
+    - Organization: {subject.get(b'O', b'N/A').decode('utf-8')}
+    - Common Name: {subject.get(b'CN', b'N/A').decode('utf-8')}
+    """
+
+    # Constructing the issuer information string
+    issuer_info = f"""
+    Certificate Issuer:
+    - Country: {issuer.get(b'C', b'N/A').decode('utf-8')}
+    - Organization: {issuer.get(b'O', b'N/A').decode('utf-8')}
+    - Common Name: {issuer.get(b'CN', b'N/A').decode('utf-8')}
+    """
+    
+    # Extracting additional certificate details
+    serial_number = cert_info.get('Serial Number', 'N/A')
+    valid_from = cert_info.get('Valid From', 'N/A')
+    valid_to = cert_info.get('Valid To', 'N/A')
+    
+    # Constructing the additional certificate details string
+    other_info = f"""
+    Serial Number: {serial_number}
+    Valid From: {valid_from}
+    Valid To: {valid_to}
+    """
+    
+    # Combine all the information into a single readable format
+    certificate_info = subject_info + issuer_info + other_info
+
+    return Text.remove_indentation(certificate_info)
+
+def get_certificate_details(ip, port=443):
+    """
+    Retrieve and parse the SSL certificate details from a server.
+    
+    Args:
+        ip (str): The IP address of the server.
+        port (int): The port number to connect to (default is 443 for HTTPS).
+        
+    Returns:
+        dict: A dictionary containing certificate details or an error message.
+    """
+    # Create an SSL context to handle the connection
+    context = ssl.create_default_context()
+    
+    # Disable hostname checking because we're using an IP address
+    context.check_hostname = False
+    
+    # Allow insecure connections for testing purposes
+    context.verify_mode = ssl.CERT_NONE
+    
     try:
-        # Membuat koneksi ke server
-        context = ssl.create_default_context()
-        with socket.create_connection((hostname, port)) as sock:
-            with context.wrap_socket(sock, server_hostname=hostname) as ssock:
-                # Mendapatkan sertifikat
-                cert = ssock.getpeercert()
-                return cert
+        # Create a socket connection and wrap it with the SSL context
+        with socket.create_connection((ip, port), timeout=30) as sock:
+            with context.wrap_socket(sock, server_hostname=ip) as ssock:
+                # Retrieve the certificate in DER format
+                der_cert = ssock.getpeercert(binary_form=True)
+                
+                # Load the certificate using OpenSSL
+                x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_ASN1, der_cert)
+                
+                # Extract details from the certificate
+                subject = x509.get_subject()
+                issuer = x509.get_issuer()
+                serial_number = x509.get_serial_number()
+                valid_from = x509.get_notBefore().decode('utf-8')
+                valid_to = x509.get_notAfter().decode('utf-8')
+
+                # Create a dictionary with the extracted certificate details
+                cert_details = {
+                    "Subject": dict(subject.get_components()),
+                    "Issuer": dict(issuer.get_components()),
+                    "Serial Number": serial_number,
+                    "Valid From": valid_from,
+                    "Valid To": valid_to,
+                }
+                
+                return cert_details
     except Exception as e:
-        return (f"[red]Error: {e}[/red]")
-
-def print_cert_info(cert):
-    if cert:
-        return (cert)
-    else:
-        return ("[yellow]No certificate found.[/yellow]")
-
+        return f"[red]Error: {e}[/red]"
 
 def run(ip, port, options):
+    """
+    Main function to retrieve and format certificate details.
+    
+    Args:
+        ip (str): The IP address of the server.
+        port (int): The port number to connect to.
+        options (dict): Additional options (not used in this function).
+        
+    Returns:
+        str: Formatted certificate information or an error message.
+    """
     try:
-        hostname = ip
-        cert_info = get_ssl_cert_info(hostname)
-        cert_info = print_cert_info(cert_info)
+        # Retrieve certificate details from the server
+        cert_info = get_certificate_details(ip)
 
+        # Format the certificate details if retrieval was successful
         if isinstance(cert_info, dict):
-            info_string = (
-                f"Subject: {'; '.join(f'{x[0][0]}: {x[0][1]}' for x in cert_info['subject'])}\n"
-                f"Issuer: {'; '.join(f'{x[0][0]}: {x[0][1]}' for x in cert_info['issuer'])}\n"
-                f"Version: {cert_info['version']}\n"
-                f"Serial Number: {cert_info['serialNumber']}\n"
-                f"Not Before: {cert_info['notBefore']}\n"
-                f"Not After: {cert_info['notAfter']}\n"
-                f"Subject Alternative Names: {', '.join(f'{x[0]}: {x[1]}' for x in cert_info['subjectAltName'])}\n"
-                f"OCSP URL: {', '.join(cert_info['OCSP'])}\n"
-                f"CA Issuers URL: {', '.join(cert_info['caIssuers'])}\n"
-                f"CRL Distribution Points: {', '.join(cert_info['crlDistributionPoints'])}"
-            )
-        
-            return info_string
-        
+            return format_certificate_info(cert_info)
+          
         return cert_info
     except Exception as e:
         return f"[red]Error: {str(e)}[/red]"

@@ -93,9 +93,8 @@ def perform_concurrent_scans(ips, options):
                        
                 # progress.remove_task(task_global)
 
-        console.print('\n\n')
-        console.print(f"[cyan][UP][/cyan] Host Up      : {total_hosts_up}")
-        console.print(f"[red][CL][/red] Host Close   : {total_hosts_close}")
+        console.print(f"  [cyan][UP][/cyan] Host Up      : {total_hosts_up}")
+        console.print(f"  [red][CL][/red] Host Close   : {total_hosts_close}")
     except KeyboardInterrupt:
         console.print("[red]Scanning interrupted by user. Exiting...[/red]")
         sys.exit(1)
