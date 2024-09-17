@@ -15,4 +15,5 @@ match:
         part: header
         regex:
           - 'Nginx'
+          - 'nginx'
         condition: and

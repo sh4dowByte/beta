@@ -13,4 +13,5 @@ match:
         part: header
         regex:
           - 'Apache'
+          - 'apache'
         condition: and

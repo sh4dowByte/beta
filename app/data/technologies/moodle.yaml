@@ -1,0 +1,21 @@
+info:
+  name: Moodle
+  author: sh4dowByte
+  type: Learning Management System (LMS)
+  description: Moodle is an open-source learning platform designed to provide educators, administrators, and learners with a single robust, secure, and integrated system to create personalized learning environments.
+  references:
+    - https://moodle.org/
+    - https://docs.moodle.org/
+
+match:
+  - matchers-condition: or
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - 'Moodle'
+          - 'moodle'
+          - 'theme/moodle/'
+          - 'lib/ajax/service.php'
+          - 'moodle/'
+        condition: and

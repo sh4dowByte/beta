@@ -1,0 +1,19 @@
+info:
+  name: CodeIgniter
+  author: sh4dowByte
+  type: Web Framework
+  description: CodeIgniter is a powerful PHP framework with a small footprint for building dynamic web applications. It is known for its simplicity and speed.
+  references:
+    - https://codeigniter.com/
+    - https://codeigniter.com/user_guide/
+
+match:
+  - matchers-condition: or
+    matchers:
+      - type: regex
+        part: header
+        regex:
+          - 'codeigniter'
+          - 'ci_session'
+          - '_session'
+        condition: and
