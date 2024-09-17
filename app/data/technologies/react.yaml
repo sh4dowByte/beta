@@ -1,0 +1,17 @@
+info:
+  name: React
+  author: sh4dowByte
+  type: JavaScript Library
+  description: React is a JavaScript library for building user interfaces. It allows developers to create large web applications that can update and render efficiently in response to data changes.
+  references:
+    - https://reactjs.org/
+
+match:
+  - matchers-condition: or
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - 'react(\.min)?\.js'  # Detects react.js or react.min.js
+          - 'ReactDOM\.render'
+        condition: and

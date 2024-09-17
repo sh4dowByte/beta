@@ -1,0 +1,19 @@
+id: wordpress
+
+info:
+  name: Wordpress
+  author: sh4dowByte
+  type: CMS
+  description: WordPress is a free and open-source content management system written in PHP and paired with a MySQL or MariaDB database. Features include a plugin architecture and a template system.
+  references:
+    - https://httpd.apache.org/
+    
+match:
+  - matchers-condition: or
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - 'wordpress'
+          - 'WordPress'
+        condition: and

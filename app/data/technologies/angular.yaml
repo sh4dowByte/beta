@@ -1,0 +1,17 @@
+info:
+  name: Angular
+  author: sh4dowByte
+  type: JavaScript Framework
+  description: Angular is a platform and framework for building single-page client applications using HTML and TypeScript. It is maintained by Google and is known for its component-based architecture.
+  references:
+    - https://angular.io/
+
+match:
+  - matchers-condition: or
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - 'angular(\.min)?\.js'  # Detects angular.js or angular.min.js
+          - 'ng-app'  # Common Angular directive
+        condition: and

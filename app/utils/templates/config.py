@@ -1,5 +1,5 @@
 import yaml
-
+from rich.console import Console
 
 def load_config(file_path):
     """
@@ -8,6 +8,10 @@ def load_config(file_path):
     :param file_path: Path to the YAML configuration file
     :return: Configuration as a dictionary
     """
-    file_path = 'app/'+file_path
-    with open(file_path, 'r') as file:
-        return yaml.safe_load(file)
+    console = Console()
+    try:
+        with open(file_path, 'r') as file:
+            return yaml.safe_load(file)
+    except Exception as e:
+        console.print(f"Error: {str(e)}")
+        return None

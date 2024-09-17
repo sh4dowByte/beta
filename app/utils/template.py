@@ -8,7 +8,7 @@ class MissingRequiredOptionError(Exception):
     """Custom exception for missing required options."""
     pass
 
-def load_all_template():
+def load_all_template(base_dir):
     """
     Load all templates from the specified directory and return a list of their names.
 
@@ -19,8 +19,6 @@ def load_all_template():
     Returns:
         list: A list containing the names of all templates found.
     """
-    global templates_total
-    base_dir = 'app/data'
     template_folder_name = os.path.basename(base_dir)
 
     templates = []
@@ -31,12 +29,11 @@ def load_all_template():
                 # Calculate relative path from the root folder and replace path separator
                 relative_path = os.path.relpath(os.path.join(root, file), base_dir)
                 template_name = relative_path.replace(os.path.sep, '/')
-                append_template(f"{template_folder_name}/{template_name}")
+                append_template(f"{base_dir}/{template_name}")
 
-    templates_total = len(templates)
     return templates
 
-def load_template(options):
+def load_template(options, base_dir = 'app/data'):
     """
     Load templates based on the provided tags and IDs, check their options, and prepare them for execution.
 
@@ -54,10 +51,9 @@ def load_template(options):
         list: A list of dictionaries containing the template's run function, metadata, and default arguments.
     """
 
-    template_names = load_all_template()
+    template_names = load_all_template(base_dir)
 
     templates_found = 0
-    templates_total = len(template_names)
 
     if not template_names:
         return []
@@ -68,15 +64,16 @@ def load_template(options):
         
         config = load_config(template_name)
 
-        info = config.get('info', {})
-        metadatas.append(info)
+        if config:
+            info = config.get('info', {})
+            metadatas.append(info)
 
-        run = replace_placeholders(config, options)
-        templates_found += 1
-        templates.append({
-            'run': run,
-            'metadata': config,
-        })
+            run = replace_placeholders(config, options)
+            templates_found += 1
+            templates.append({
+                'run': run,
+                'metadata': config,
+            })
     
     return templates, metadatas
 
@@ -160,7 +157,7 @@ def replace_placeholders(obj, variables, root_config=None):
 
     return result
 
-def run_template(config, response):
+def run_template(config, response = '', ip = '', ):
     result = []
     if config.get('match'):
         result = result + match(config, response)

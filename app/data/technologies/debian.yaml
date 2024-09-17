@@ -1,0 +1,18 @@
+info:
+  name: Debian
+  author: sh4dowByte
+  type: Operating System
+  description: Debian is a free and open-source operating system based on the Linux kernel. It is known for its stability, security, and extensive package repository, making it ideal for both server and desktop environments. Debian is widely used in servers and forms the base for many other distributions like Ubuntu.
+  references:
+    - https://www.debian.org/doc/manuals/debian-reference/
+    - https://wiki.debian.org/SystemAdministration
+    - https://www.debian.org/
+    
+match:
+  - matchers-condition: or
+    matchers:
+      - type: regex
+        part: header
+        regex:
+          - 'Debian'
+        condition: and

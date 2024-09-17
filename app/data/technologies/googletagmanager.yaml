@@ -1,0 +1,18 @@
+info:
+  name: Google Tag Manager
+  author: sh4dowByte
+  type: Tag Management System
+  description: Google Tag Manager is a tag management system that allows you to quickly and easily update tags and code snippets on your website or mobile app from a web-based user interface.
+  references:
+    - https://tagmanager.google.com/
+    - https://support.google.com/tagmanager/
+
+match:
+  - matchers-condition: or
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - 'gtm\.js'
+          - 'googletagmanager\.com'
+        condition: and

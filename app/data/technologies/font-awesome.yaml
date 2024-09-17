@@ -1,0 +1,22 @@
+info:
+  name: Font Awesome
+  author: sh4dowByte
+  type: Icon Library
+  description: Font Awesome is a popular icon toolkit based on CSS and LESS. It provides scalable vector icons that can be customized with CSS, including colors, sizes, and shadows.
+  references:
+    - https://fontawesome.com/
+    - https://fontawesome.com/icons
+
+match:
+  - matchers-condition: or
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - 'fontawesome'
+          - 'font-awesome'
+          - 'fa\-'
+          - 'fa\-solid'
+          - 'fa\-regular'
+          - 'fa\-brands'
+        condition: and

@@ -1,0 +1,18 @@
+info:
+  name: WordPress
+  author: sh4dowByte
+  type: Content Management System (CMS)
+  description: WordPress is a free and open-source content management system (CMS) based on PHP and MySQL. It is the most widely used CMS in the world, known for its flexibility, ease of use, and a vast ecosystem of plugins and themes. WordPress powers a large percentage of websites on the internet, ranging from personal blogs to large corporate sites.
+  references:
+    - https://wordpress.org/
+    - https://developer.wordpress.org/
+    - https://wordpress.org/support/
+
+match:
+  - matchers-condition: or
+    matchers:
+      - type: regex
+        part: header
+        regex:
+          - 'Ubuntu'
+        condition: and

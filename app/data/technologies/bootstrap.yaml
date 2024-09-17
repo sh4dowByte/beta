@@ -1,0 +1,17 @@
+info:
+  name: Bootstrap
+  author: sh4dowByte
+  type: CSS Framework
+  description: Bootstrap is a free, open-source front-end framework for developing websites and web applications. It contains HTML, CSS, and JavaScript-based design templates for typography, forms, buttons, navigation, and other interface components.
+  references:
+    - https://getbootstrap.com/
+
+match:
+  - matchers-condition: or
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - 'bootstrap(\.min)?\.css'  # Detects bootstrap.css or bootstrap.min.css
+          - 'bootstrap(\.min)?\.js'   # Detects bootstrap.js or bootstrap.min.js
+        condition: and

@@ -21,7 +21,7 @@ metadata = {
 def run(ip, port, options):
     path = options.get('path', '/')
 
-    templates, metadata_templates = load_template([])
+    templates, metadata_templates = load_template([], 'app/data/technologies')
 
    
     if port == 443:
@@ -35,12 +35,12 @@ def run(ip, port, options):
 
         technology = []
         for template in templates:
-            result = run_template(template['run'], response)
+            result = run_template(template['run'], response = response)
 
             if result is not None:
                 for url, type, match_status, extracted_data, responses in result:
                     if match_status:
-                        technology.append(template['run']['info']['name'])
+                        technology.append(f"{template['run']['info']['name']} [purple]({template['run']['info']['type']})[/purple]")
 
         # Kembalikan hasil title dan request type
         return technology

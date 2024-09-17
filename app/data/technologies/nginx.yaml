@@ -1,0 +1,18 @@
+info:
+  name: Nginx
+  author: sh4dowByte
+  type: Web Servers
+  description: Nginx is a high-performance HTTP server, reverse proxy, and load balancer. It is widely used for serving static content, handling many simultaneous connections efficiently, and acting as a reverse proxy for distributed systems.
+  references:
+    - https://nginx.org/en/docs/
+    - https://docs.nginx.com/
+    - https://www.digitalocean.com/community/tutorials/understanding-the-nginx-configuration-file-structure-and-configuration-contexts
+
+match:
+  - matchers-condition: or
+    matchers:
+      - type: regex
+        part: header
+        regex:
+          - 'Nginx'
+        condition: and

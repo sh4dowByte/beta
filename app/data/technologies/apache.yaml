@@ -1,12 +1,10 @@
-id: apache
-
 info:
   name: Apache
   author: sh4dowByte
-  severity: info
-  description: Apache Server
-  metadata:
-  tags: server
+  type: Web Servers
+  description: Apache is a free and open-source cross-platform web server software.
+  references:
+    - https://httpd.apache.org/
 
 match:
   - matchers-condition: or

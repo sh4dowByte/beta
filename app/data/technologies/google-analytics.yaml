@@ -1,0 +1,18 @@
+info:
+  name: Google Analytics
+  author: sh4dowByte
+  type: Analytics
+  description: Google Analytics is a web analytics service offered by Google that tracks and reports website traffic. It provides detailed statistics and insights about website visitors and their behavior.
+  references:
+    - https://analytics.google.com/
+    - https://support.google.com/analytics/
+
+match:
+  - matchers-condition: or
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - 'analytics\.js'
+          - ga\(\s*\'create\'
+        condition: and

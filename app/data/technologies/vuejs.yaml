@@ -1,0 +1,17 @@
+info:
+  name: Vue.js
+  author: sh4dowByte
+  type: JavaScript Framework
+  description: Vue.js is a progressive framework for building user interfaces. It is designed to be incrementally adoptable and focuses on the view layer only.
+  references:
+    - https://vuejs.org/
+
+match:
+  - matchers-condition: or
+    matchers:
+      - type: regex
+        part: body
+        regex:
+          - 'vue(\.min)?\.js'  # Detects vue.js or vue.min.js
+          - 'Vue\.config'
+        condition: and
