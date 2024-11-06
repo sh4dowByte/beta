@@ -15,3 +15,8 @@ match:
           - 'Apache'
           - 'apache'
         condition: and
+    extractors:
+      - type: regex
+        part: body
+        regex:
+          - (?<=Apache\/)[0-9]+\.[0-9]+\.[0-9]+

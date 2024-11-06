@@ -9,7 +9,7 @@ from rich.console import Console
 # Disable InsecureRequestWarning
 warnings.simplefilter('ignore', InsecureRequestWarning)
 
-def match(config, response):
+def match(config, response = '', ip = ''):
     """
     Perform dynamic HTTP requests based on the provided configuration.
 
@@ -21,7 +21,6 @@ def match(config, response):
     match_config = config.get('match', [])
     debug = config.get('debug', False)
 
-    type = 'http'
     results = []
 
     for entry in match_config:
@@ -33,7 +32,7 @@ def match(config, response):
 
         match_status = check_matchers(response, matchers, matchers_condition)
         extracted_data = apply_extractors(response, extractors, extract_separator)
-        results.append(('url', type, match_status, extracted_data, response.text))
+        results.append((ip, match_status, extracted_data, response))
         if stop_at_first_match and match_status:
             break
 
