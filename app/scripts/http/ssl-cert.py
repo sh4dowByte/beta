@@ -1,3 +1,4 @@
+from datetime import datetime
 import OpenSSL
 import ssl
 import socket
@@ -28,31 +29,40 @@ def format_certificate_info(cert_info):
     
     # Constructing the subject information string
     subject_info = f"""Certificate Subject:
-    - Country: {subject.get(b'C', b'N/A').decode('utf-8')}
-    - State/Province: {subject.get(b'ST', b'N/A').decode('utf-8')}
-    - Locality: {subject.get(b'L', b'N/A').decode('utf-8')}
-    - Organization: {subject.get(b'O', b'N/A').decode('utf-8')}
-    - Common Name: {subject.get(b'CN', b'N/A').decode('utf-8')}
+    - Country        : {subject.get(b'C', b'N/A').decode('utf-8')}
+    - State/Province : {subject.get(b'ST', b'N/A').decode('utf-8')}
+    - Locality       : {subject.get(b'L', b'N/A').decode('utf-8')}
+    - Organization   : {subject.get(b'O', b'N/A').decode('utf-8')}
+    - Common Name    : {subject.get(b'CN', b'N/A').decode('utf-8')}
     """
 
     # Constructing the issuer information string
     issuer_info = f"""
     Certificate Issuer:
-    - Country: {issuer.get(b'C', b'N/A').decode('utf-8')}
-    - Organization: {issuer.get(b'O', b'N/A').decode('utf-8')}
-    - Common Name: {issuer.get(b'CN', b'N/A').decode('utf-8')}
+    - Country        : {issuer.get(b'C', b'N/A').decode('utf-8')}
+    - Organization   : {issuer.get(b'O', b'N/A').decode('utf-8')}
+    - Common Name    : {issuer.get(b'CN', b'N/A').decode('utf-8')}
     """
     
     # Extracting additional certificate details
     serial_number = cert_info.get('Serial Number', 'N/A')
     valid_from = cert_info.get('Valid From', 'N/A')
     valid_to = cert_info.get('Valid To', 'N/A')
+    # valid_to_formatted = valid_to.strftime("%Y-%m-%d %H:%M:%S")
+    days_until_expiration = (datetime.now() - datetime.strptime(valid_to, "%Y%m%d%H%M%SZ")).days
+
+    valid_from = datetime.strptime(valid_from, "%Y%m%d%H%M%SZ").strftime("%Y-%m-%d %H:%M:%S")
+    valid_to = datetime.strptime(valid_to, "%Y%m%d%H%M%SZ").strftime("%Y-%m-%d %H:%M:%S")
+
+    # Calculate days until expiration
+
     
     # Constructing the additional certificate details string
     other_info = f"""
-    Serial Number: {serial_number}
-    Valid From: {valid_from}
-    Valid To: {valid_to}
+    Serial Numbe     : {serial_number}
+    Valid From       : {valid_from}
+    Valid To         : {valid_to}
+    Days Expiration  : {days_until_expiration} days
     """
     
     # Combine all the information into a single readable format

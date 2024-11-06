@@ -160,6 +160,6 @@ def replace_placeholders(obj, variables, root_config=None):
 def run_template(config, response = '', ip = '', ):
     result = []
     if config.get('match'):
-        result = result + match(config, response)
+        result = result + match(config, response=response, ip=ip)
    
     return result

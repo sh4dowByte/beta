@@ -35,12 +35,17 @@ def run(ip, port, options):
 
         technology = []
         for template in templates:
-            result = run_template(template['run'], response = response)
+            result = run_template(template['run'], response = response, ip=ip)
 
             if result is not None:
-                for url, type, match_status, extracted_data, responses in result:
+                for ip, match_status, extracted_data, responses in result:
+                    if not extracted_data:
+                        extracted_data = ' '
+                    else:
+                        extracted_data = f" [yellow][{extracted_data}][/yellow] "
+
                     if match_status:
-                        technology.append(f"{template['run']['info']['name']} [purple]({template['run']['info']['type']})[/purple]")
+                        technology.append(f"{template['run']['info']['name']}{extracted_data}[purple]({template['run']['info']['type']})[/purple]")
 
         # Kembalikan hasil title dan request type
         return technology

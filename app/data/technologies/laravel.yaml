@@ -1,7 +1,7 @@
 info:
   name: Laravel
   author: sh4dowByte
-  type: Framework
+  type: PHP Framework
   description: Laravel is a PHP web application framework with expressive, elegant syntax. It provides a robust set of tools and an application architecture that makes it easy to maintain and scale.
   references:
     - https://laravel.com/
@@ -10,7 +10,7 @@ match:
   - matchers-condition: or
     matchers:
       - type: regex
-        part: headers
+        part: header
         regex:
           - 'laravel_session'  # Laravel session cookie
       - type: regex

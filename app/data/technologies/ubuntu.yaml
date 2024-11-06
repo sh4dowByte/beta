@@ -1,12 +1,12 @@
 info:
-  name: WordPress
+  name: Ubuntu Server
   author: sh4dowByte
-  type: Content Management System (CMS)
-  description: WordPress is a free and open-source content management system (CMS) based on PHP and MySQL. It is the most widely used CMS in the world, known for its flexibility, ease of use, and a vast ecosystem of plugins and themes. WordPress powers a large percentage of websites on the internet, ranging from personal blogs to large corporate sites.
+  type: Operating System
+  description: Ubuntu is a popular open-source operating system based on Linux, widely used for servers, cloud computing, and personal computers. This template is designed to detect websites or servers running on the Ubuntu operating system by analyzing HTTP headers.
   references:
-    - https://wordpress.org/
-    - https://developer.wordpress.org/
-    - https://wordpress.org/support/
+    - https://ubuntu.com/server
+    - https://ubuntu.com/
+    - https://help.ubuntu.com/
 
 match:
   - matchers-condition: or
