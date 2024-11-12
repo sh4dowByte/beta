@@ -1,7 +1,9 @@
 import importlib
 import os
 
-def load_all_script(base_dir = 'app/scripts'):
+from app.config import App
+
+def load_all_script():
     """
     Load all modules from the specified directory and return a list of their names.
 
@@ -13,7 +15,7 @@ def load_all_script(base_dir = 'app/scripts'):
     Returns:
         list: A list containing the names of all modules found.
     """
-   
+    base_dir = App.script_path
     template_folder_name = os.path.basename(base_dir)
 
     modules = []
@@ -71,5 +73,4 @@ def load_script(script, options, all = False):
                 'options': options,
                 'name': data['name']
             })
-   
     return modules, metadatas

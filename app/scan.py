@@ -1,4 +1,5 @@
 import json
+from app.config import App
 from app.utils.helper import tabbed_result
 from app.utils.network import check_connection, get_banner
 from app.utils.style import Colors
@@ -57,7 +58,7 @@ def get_open_port(ip, port, result_queue, options, tree):
 def pool(ip, options, tree):
     """Executes a port scan on the given IP with the specified options."""
     global ports
-    with open('app/data/port.json', 'r') as file:
+    with open(App.data_path+'/port.json', 'r') as file:
         ports = json.load(file)
 
     # Determine the list of ports to scan
