@@ -4,6 +4,7 @@ import warnings
 from urllib3.exceptions import InsecureRequestWarning
 from bs4 import BeautifulSoup
 
+from app.config import App
 from app.utils.template import load_template, run_template
 
 # Disable InsecureRequestWarning
@@ -21,7 +22,7 @@ metadata = {
 def run(ip, port, options):
     path = options.get('path', '/')
 
-    templates, metadata_templates = load_template([], 'app/data/technologies')
+    templates, metadata_templates = load_template([], App.data_path+'/technologies')
 
    
     if port == 443:
