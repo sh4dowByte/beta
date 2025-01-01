@@ -1,4 +1,5 @@
 import ipaddress
+import os
 import socket
 import ssl
 import sys
@@ -131,7 +132,6 @@ def is_ip_address(target):
         return True
     except socket.error:
         return False
-
 def process_ip_list(ip_list_file):
     """
     Process a file containing IP addresses or CIDR notations.
@@ -146,8 +146,11 @@ def process_ip_list(ip_list_file):
         list: A list of IP addresses.
     """
     ips = []
+    current_dir = os.getcwd()  # Get current working directory
+    file_path = os.path.join(current_dir, ip_list_file)  # Build absolute path
+
     try:
-        with open(ip_list_file, 'r') as file:
+        with open(file_path, 'r') as file:
             for target in file:
                 target = target.strip()
                 if '/' in target:
@@ -159,7 +162,7 @@ def process_ip_list(ip_list_file):
                 else:
                     ips.append(target)
     except IOError:
-        print(f"❌ [-] Could not read file: {ip_list_file}")
+        print(f"❌ [-] Could not read file: {file_path}")
         sys.exit()
     return [ip.strip() for ip in ips]
 
