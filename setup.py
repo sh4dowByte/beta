@@ -18,11 +18,10 @@ setup(
     },
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
     python_requires='>=3.12',  # Versi Python minimum
     author="sh4dowByte",  # Nama pembuat aplikasi
-    author_email="ahmadjuhdi007@gmail.com",  # Email pembuat (opsional)
+    author_email="Ahmad Juhdi <ahmadjuhdi007@gmail.com>",  # Email pembuat (opsional)
     description="Beta - A Python tool for scanning and information gathering",  # Deskripsi singkat
 )
