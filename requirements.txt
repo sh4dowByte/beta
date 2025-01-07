@@ -2,3 +2,5 @@ bs4
 lxml
 rich
 requests
+pyopenssl
+pyyaml

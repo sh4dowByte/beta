@@ -28,38 +28,82 @@
 
 **Note**: Beta is designed for educational and testing purposes. Use of this application should be conducted in a safe and legal environment and adhere to applicable cybersecurity laws and ethics.
 
-### Examples
+## ⚙️ Installation
+
+### Using pipx (Recommended)
+`pipx` is a tool to install and run Python applications in isolated environments. Follow these steps to install Beta:
+
+1. Install pipx:
+   ```bash
+   sudo apt install pipx
+   pipx ensurepath
+   ```
+
+2. Clone the Beta repository:
+   ```bash
+   git clone https://github.com/sh4dowByte/beta.git
+   cd beta
+   ```
+
+3. Install Beta using pipx:
+   ```bash
+   pipx install .
+   ```
+
+### Alternative Setup - Using Alias
+If you prefer not to use `pipx`, you can set up an alias to run `beta.py` directly from your terminal.
+
+1. Clone the Beta repository:
+   ```bash
+   git clone https://github.com/sh4dowByte/beta.git
+   cd beta
+   ```
+
+2. Install the required dependencies from `requirements.txt`:
+   ```bash
+   python3 -m pip install -r requirements.txt
+   ```
+
+3. Open your terminal and add the following alias to your shell configuration file (e.g., `~/.bashrc` or `~/.zshrc`):
+   ```bash
+   alias beta='python3 ~/Pentest/beta/beta.py'
+   ```
+
+4. After adding the alias, run `source ~/.bashrc` (or `source ~/.zshrc` for zsh) to reload your shell configuration.
+
+Now, you can run `beta` directly from your terminal!
+
+## 📝 Examples
 
 #### Single IP
 
 ```bash
-python3 beta.py 192.168.1.1
+python beta 192.168.1.1
 ```
 
 #### IPs from a file
 
 ```bash
-python3 beta.py -l ip_list.txt
+python beta -l ip_list.txt
 ```
 
 #### Multiple IPs and Domains
 
 ```bash
-python3 beta.py 192.168.1.1 example.com 192.168.1.2
+python beta 192.168.1.1 example.com 192.168.1.2
 ```
 
 #### CIDR Range
 
 ```bash
-python3 beta.py 192.168.1.0/24
+python beta 192.168.1.0/24
 ```
 
 #### IP Range
 
 ```bash
-python3 beta.py 192.168.1.0-192.168.2.254
+python beta 192.168.1.0-192.168.2.254
 ```
-
 
 ## 📚 Reference Tools
 
