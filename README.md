@@ -78,31 +78,31 @@ Now, you can run `beta` directly from your terminal!
 #### Single IP
 
 ```bash
-python beta 192.168.1.1
+beta 192.168.1.1
 ```
 
 #### IPs from a file
 
 ```bash
-python beta -l ip_list.txt
+beta -l ip_list.txt
 ```
 
 #### Multiple IPs and Domains
 
 ```bash
-python beta 192.168.1.1 example.com 192.168.1.2
+beta 192.168.1.1 example.com 192.168.1.2
 ```
 
 #### CIDR Range
 
 ```bash
-python beta 192.168.1.0/24
+beta 192.168.1.0/24
 ```
 
 #### IP Range
 
 ```bash
-python beta 192.168.1.0-192.168.2.254
+beta 192.168.1.0-192.168.2.254
 ```
 
 ## 📚 Reference Tools
