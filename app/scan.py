@@ -40,6 +40,14 @@ def is_host_reachable(ip, timeout=30, count=10):
 def scan(options, var):
     """Executes the port scan with the given options and returns the result."""
     ip = var["ip"]
+
+    if options["ping"]:
+        if(is_host_reachable(ip)):
+            tree = Tree(f"Server on [green]{ip}[/green] is UP")
+            return tree
+        
+        return None
+
     tree = Tree(f"Server on [green]{ip}[/green]")
 
     not_reachable = False

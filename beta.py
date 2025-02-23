@@ -143,6 +143,10 @@ def main():
         help="Use All Script Engine"
     )
     parser.add_argument(
+        "--ping", action="store_true",
+        help="Ping only"
+    )
+    parser.add_argument(
         "-l", "--limit-text", action="store_false",
         help="Show all text output for the scan results, no limited text."
     )
@@ -179,6 +183,7 @@ def main():
             'port': args.port,
             'max_workers': args.max_workers,
             'script': script,
+            'ping': args.ping,
         })
     except KeyboardInterrupt:
         console.print("[red]Process interrupted by user. Exiting...[/red]")
