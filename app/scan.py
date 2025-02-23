@@ -2,13 +2,12 @@ import json
 import subprocess
 import platform
 from app.config import App
-from app.utils.helper import tabbed_result
 from app.utils.network import check_connection, get_banner
-from app.utils.style import Colors
 from concurrent.futures import ThreadPoolExecutor
 from queue import Queue
 from rich.console import Console
 from rich.tree import Tree
+from getmac import get_mac_address
 
 ports = []
 
@@ -40,15 +39,21 @@ def is_host_reachable(ip, timeout=30, count=10):
 def scan(options, var):
     """Executes the port scan with the given options and returns the result."""
     ip = var["ip"]
+    mac_text = ""
+
+    # Get mac address in local network
+    mac = get_mac_address(ip=ip)
+    if mac is not None:
+        mac_text = (f"[yellow][{mac}][/yellow]")
 
     if options["ping"]:
         if(is_host_reachable(ip)):
-            tree = Tree(f"Server on [green]{ip}[/green] is UP")
+            tree = Tree(f"Server on [green]{ip}[/green] {mac_text} is UP")
             return tree
         
         return None
 
-    tree = Tree(f"Server on [green]{ip}[/green]")
+    tree = Tree(f"Server on [green]{ip}[/green] {mac_text}")
 
     not_reachable = False
 

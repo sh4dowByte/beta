@@ -4,3 +4,4 @@ rich
 requests
 pyopenssl
 pyyaml
+getmac

@@ -12,6 +12,7 @@ setup(
         "bs4",
         "lxml",
         "pyopenssl",
+        "getmac",
         "pyyaml"
     ],
     entry_points={
