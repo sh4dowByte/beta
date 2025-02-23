@@ -10,7 +10,7 @@ metadata = {
     ''',
     'author': 'sh4dowByte',
     'license': 'BETA',
-    'portrule': ['https',],
+    'portrule': ['https'],
 }
 
 def format_certificate_info(cert_info):
@@ -49,7 +49,7 @@ def format_certificate_info(cert_info):
     valid_from = cert_info.get('Valid From', 'N/A')
     valid_to = cert_info.get('Valid To', 'N/A')
     # valid_to_formatted = valid_to.strftime("%Y-%m-%d %H:%M:%S")
-    days_until_expiration = (datetime.now() - datetime.strptime(valid_to, "%Y%m%d%H%M%SZ")).days
+    days_until_expiration = (datetime.strptime(valid_to, "%Y%m%d%H%M%SZ") - datetime.now()).days
 
     valid_from = datetime.strptime(valid_from, "%Y%m%d%H%M%SZ").strftime("%Y-%m-%d %H:%M:%S")
     valid_to = datetime.strptime(valid_to, "%Y%m%d%H%M%SZ").strftime("%Y-%m-%d %H:%M:%S")
@@ -62,7 +62,7 @@ def format_certificate_info(cert_info):
     Serial Numbe     : {serial_number}
     Valid From       : {valid_from}
     Valid To         : {valid_to}
-    Days Expiration  : {days_until_expiration} days
+    Days Expiration  : {days_until_expiration} days left
     """
     
     # Combine all the information into a single readable format
