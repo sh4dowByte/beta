@@ -11,6 +11,7 @@ env:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    environment: 'Docker Hub sh4dowbyte'
 
     steps:
     - name: Checkout repository
