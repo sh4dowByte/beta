@@ -1,0 +1,8 @@
+name: beta
+
+services:
+  beta:
+    image: sh4dowbyte/beta:latest
+    container_name: beta
+    tty: true
+    stdin_open: true
