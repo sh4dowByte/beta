@@ -3,7 +3,7 @@ name: Build and Push Docker Image
 on:
   push:
     branches:
-      - docker-deploy          # Ganti sesuai branch utama kamu
+      - docker-publish          # Ganti sesuai branch utama kamu
 
 env:
   IMAGE_NAME: sh4dowbyte/beta
