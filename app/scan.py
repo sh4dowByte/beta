@@ -97,18 +97,11 @@ def get_open_port(ip, port, result_queue, options, tree):
     if sock:
         # Find all services associated with the open port
         services = [name for name, port_list in ports.items() if port in port_list]
-
-        port_open = ''  # Initialize port_open variable
         
         # Optionally retrieve the banner
-        if options["banner"]:
-            banner = get_banner(sock, options["timeout"], options["limit_text"]) if options["banner"] else ""
-            # Get the banner for the open port
-            if banner:
-                port_open = tree.add(f"Port Open [green bold]{port}[/green bold] [[blue]{','.join(services)}[/blue]] {banner}")
-        else: 
-            port_open = tree.add(f"Port Open [green bold]{port}[/green bold] [[blue]{','.join(services)}[/blue]]")
-
+        banner = get_banner(sock, options["timeout"], options["limit_text"]) if options["banner"] else ""
+        port_open = tree.add(f"Port Open [green bold]{port}[/green bold] [[blue]{','.join(services)}[/blue]] {banner}")
+        
         # Process script engines
         process_script_engines(ip, port, services, options["script"], port_open)
 
